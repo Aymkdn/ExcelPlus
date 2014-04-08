@@ -4,27 +4,7 @@
  * Copyright 2013, aymeric@kodono.info
  * Licensed under GPL Version 3 licenses.
  *
- * <script type="text/javascript" src="../Global%20Documents/js/xlsx.js"></script>
- * <script type="text/javascript" src="../Global%20Documents/js/jszip/jszip-all.min.js"></script>
- * <script type="text/javascript" src="../Global%20Documents/js/excelplus-2.0.js"></script>
- * <object id="file-excel" />
- * <script>
- * var oExcel = new ExcelPlus();
- * // create a button to open a remote file
- * oExcel.openRemote({
- *   idButton:'file-excel',
- *   flashPath:'/some/where/swfobject/',
- *   readCallback:function(name,base64) {
- *     console.log(this.getSheetNames()); // list of the worksheets
- *     // if there are several sheets you need to define which one to read:
- *     if (this.nbSheets > 1) this.activeSheet(1); // the first sheet is the one to read
- *     // you can show the sheet names with : `this.getSheetNames()`
- *     console.log("Value in the cell A2 - "+this.read("A2"));
- *     console.log("Values in the cells A1:B3 - "+this.read("A1:B3"));
- *     // we can also get the full sheet content into a 2D-array with `this.readAll()`
- *   }
- * })
- * </script>
+ * http://aymkdn.github.io/ExcelPlus/
  */
 
 // Global variables
@@ -76,13 +56,14 @@ function ExcelPlus(params) {
   this.nbRows = 0, this.nbColumns = 0; // the number of rows and columns used in the opened file
   this.filename = ""; // name of the file we read
 
-  params = params || {};  
+  params = params || {};
+  this.error = "";
+
   // check if we can use ActiveX here
   this.canActiveX = (params.useActiveX !== false ? this._init() : false);
 
   this.useActiveX = (params.useActiveX == undefined ? true : params.useActiveX); // we can force the use of ActiveX
   if (!this.canActiveX) this.useActiveX = false; // except if it's not available
-  this.error = "";
 }
 
 var ExcelPlus_savedObjects = []; // this variable is used to close the opened Excel when we use ActiveX -- so no need to call .close()
@@ -170,7 +151,7 @@ ExcelPlus.prototype = {
       })
     }
   },
-  // open an excepting Excel file
+  // open an existing Excel file
   // @param path is the path to the file
   // @param visible (default: false) show the opened file on the screen
   open:function(path, visible) {
@@ -628,8 +609,9 @@ var Flash = {
         document.getElementsByTagName("head")[0].appendChild(fileref);
         // wait for the file to be loaded
         return this._waitForObjectToBeLoaded(id,callback);
-      } else
-        swfobject.embedSWF(__ExcelPlus_flashPath+"/FileToDataURI.swf", id, "100px", "40px", "10", __ExcelPlus_flashPath+"/expressInstall.swf", {}, {}, {});
+      } else {
+        swfobject.embedSWF(__ExcelPlus_flashPath+"/FileToDataURI.swf", id, "80px" /* width of the Flash zone */, "22px" /* height of the Flash zone */, "10", __ExcelPlus_flashPath+"/expressInstall.swf", {}, {}, {});
+      }
     } else {
       // replace the <object> by an input file
       $("#"+id).replaceWith('<input id="'+id+'" type="file" />');
@@ -656,6 +638,7 @@ var Flash = {
     * @param {String} base64 It's the base64 version of the file
     */
   getFileData: function(name, base64) {
+    if (base64===undefined) { base64=name; name="Unknown Name" }
     __Flash_getFileData_callback(name,base64);
   },
   /** 
