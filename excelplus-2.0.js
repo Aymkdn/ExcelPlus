@@ -75,11 +75,11 @@ function ExcelPlus(params) {
   this.oFile = null; // the File object
   this.nbRows = 0, this.nbColumns = 0; // the number of rows and columns used in the opened file
   this.filename = ""; // name of the file we read
-  
+
+  params = params || {};  
   // check if we can use ActiveX here
   this.canActiveX = (params.useActiveX !== false ? this._init() : false);
 
-  params = params || {};
   this.useActiveX = (params.useActiveX == undefined ? true : params.useActiveX); // we can force the use of ActiveX
   if (!this.canActiveX) this.useActiveX = false; // except if it's not available
   this.error = "";
