@@ -92,7 +92,7 @@ ExcelPlus.prototype = {
   close:function(closeFile) {
     if (this.useActiveX) {
       if (typeof closeFile == "undefined") closeFile = false;
-      if (this.oFile != null  && closeFile)  this.oFile.Close(false);
+      if (this.oFile != null  && closeFile) this.oFile.Close(false);
       if (this.oExcel != null && closeFile) this.oExcel.Quit();
       this._end();
     }
@@ -190,7 +190,7 @@ ExcelPlus.prototype = {
     // it's not a number so search for the corresping #
     if (isNaN(sheet)) {
       var arr = this.getSheetNames();
-      for (var i=1; i <= this.nbSheets; i++) {
+      for (var i=(this.useActiveX ? 0 : 1), stop=(this.useActiveX ? this.nbSheets : this.nbSheets + 1); i < stop; i++) {
         if (sheet.toLowerCase() == arr[i].toLowerCase()) {
           sheet = i;
           break;
@@ -337,11 +337,11 @@ ExcelPlus.prototype = {
     if (!isNaN(color)) return color;
     switch (color) {
       case "black":     return 1;
-      case "white":	    return 2;
+      case "white":     return 2;
       case "red":       return 3;
       case "green":     return 4;
       case "darkblue":  return 5;
-      case "blue":	    return 23;
+      case "blue":      return 23;
       case "yellow":    return 6;
       case "magenta":   return 7;
       case "cyan":      return 8;
@@ -373,9 +373,9 @@ ExcelPlus.prototype = {
     var isCell   = this._isCell(range);
     var isColumn = this._isColumn(range);
     var column   = "";
-  	var row      = "";
-  	var cell     = "";
-	
+    var row      = "";
+    var cell     = "";
+  
     if (!isCell && !isRange && !isColumn) {
       this.error = "The range provided is not a range, neither a cell, neither a column!";
       return false;
@@ -385,15 +385,15 @@ ExcelPlus.prototype = {
     if (isCell) {
       cell   = this._getCellCoord(range);
       if (cell === false) return false;
-	  column = this._getColumnName(cell.column)+":"+this._getColumnName(cell.column);
-	  row    = cell.row+":"+cell.row;
+    column = this._getColumnName(cell.column)+":"+this._getColumnName(cell.column);
+    row    = cell.row+":"+cell.row;
     }
-	
+  
     if (isRange) {
       var tmp = range.match(/([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)/);
-	  if (tmp == null || tmp.length != 5) return false;
-	  column  = tmp[1]+":"+tmp[3];
-	  row     = tmp[2]+":"+tmp[4];
+    if (tmp == null || tmp.length != 5) return false;
+    column  = tmp[1]+":"+tmp[3];
+    row     = tmp[2]+":"+tmp[4];
     }
     
     // build an array based on the {}
