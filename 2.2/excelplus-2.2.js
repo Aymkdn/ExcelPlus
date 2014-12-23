@@ -354,13 +354,13 @@ ExcelPlus.prototype = {
    * @function
    * @description Permits to create an empty Excel file
    *
-   * @param {String|Array} [sheetnames="Book1"] You can provide the names of the sheets in an array
+   * @param {String|Array} [sheetnames="Sheet1"] You can provide the names of the sheets in an array
    * @example
    *    var myExcel = new ExcelPlus();
-   *    myExcel.createFile(["Book 1", "Book 2"]);
+   *    myExcel.createFile(["Sheet 1", "Sheet 2"]);
    */
   createFile:function(sheetnames) {
-    sheetnames = sheetnames || ["Book1"];
+    sheetnames = sheetnames || ["Sheet1"];
     if (typeof sheetnames === "string") sheetnames=[sheetnames];
     this.oFile = {
       "SheetNames": [],
@@ -384,9 +384,9 @@ ExcelPlus.prototype = {
    *
    * @example
    *   var my=new ExcelPlus();
-   *   my.createFile(["Book1","Book2"]);
-   *   my.write({ "sheet":"Book1", "content":[ ["A1","B1","C1"] ] });
-   *   my.write({ "sheet":"Book2", "cell":"A1", "content":"This is the cell A1" });
+   *   my.createFile(["Sheet1","Sheet2"]);
+   *   my.write({ "sheet":"Sheet1", "content":[ ["A1","B1","C1"] ] });
+   *   my.write({ "sheet":"Sheet2", "cell":"A1", "content":"This is the cell A1" });
    *
    * // TODO the value can also be a formula, e.g. "=SUM(A1:B1)"
    */
@@ -439,8 +439,8 @@ ExcelPlus.prototype = {
    *
    * @example
    *   var my=new ExcelPlus();
-   *   my.createFile(["Book1","Book2"]);
-   *   my.selectSheet("Book1");
+   *   my.createFile(["Sheet1","Sheet2"]);
+   *   my.selectSheet("Sheet1");
    *   my.writeCell("A1","This is the content of the first cell");
    *
    * // TODO the value can also be a formula, e.g. "=SUM(A1:B1)"
