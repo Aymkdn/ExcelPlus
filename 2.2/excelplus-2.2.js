@@ -16,15 +16,6 @@ function addEventListener(el, eventName, handler) {
     });
   }
 }
-// test if it's an array
-if (!Array.isArray) {
-  /**
-   * @ignore
-   */
-  Array.isArray = function(arg) {
-    return Object.prototype.toString.call(arg) === '[object Array]';
-  };
-}
 
 // Global variables
 var __ExcelPlus_flashPath="";
@@ -122,7 +113,7 @@ ExcelPlus.prototype = {
           // our result to keep only the Base64 part
           _this.filename = file.name;
           // then call 'xlsx' to read the file
-          _this.oFile = XLSX.read(e.target.result, {type: 'binary'});
+          _this.oFile = XLSX.read(e.target.result, {type: 'binary', cellDates:true, cellStyles:true});
           _this.nbSheets = _this.oFile.SheetNames.length;
           if (_this.nbSheets == 1) {
             _this.selectSheet(1)
@@ -137,7 +128,7 @@ ExcelPlus.prototype = {
       Flash.createButton(params.idButton, function(name,base64) {
         _this.filename = name;
         // then call our function
-        _this.oFile = XLSX.read(base64, {type: 'base64'});
+        _this.oFile = XLSX.read(base64, {type: 'base64', cellDates:true, cellStyles:true});
         _this.nbSheets = _this.oFile.SheetNames.length;
         if (_this.nbSheets == 1) {
           _this.selectSheet(1);
@@ -200,7 +191,7 @@ ExcelPlus.prototype = {
         if(xhr.status == 200) {
           _this.filename = url.split("/").slice(-1);
           var data = (xhr.overrideMimeType ? xhr.responseText : convertResponseBodyToText(xhr.responseBody));
-          _this.oFile = XLSX.read(data, {type: 'binary'});
+          _this.oFile = XLSX.read(data, {type: 'binary', cellDates:true, cellStyles:true});
           _this.nbSheets = _this.oFile.SheetNames.length;
           if (_this.nbSheets == 1) {
             _this.selectSheet(1);
@@ -304,14 +295,11 @@ ExcelPlus.prototype = {
       return this;
     }
     
-    var table = [],line,val,cell;
+    var table = [],line;
     for (var row=1; row <= this.nbRows; row++) {
       line = [];
       for (var col=1; col <= this.nbColumns; col++) {
-        val="";
-        cell=this._getColumnName(col) + "" + row;
-        if (this.oSheet[cell]) val = this.oSheet[cell].v;
-        line.push(val);
+        line.push(this.read(this._getColumnName(col) + "" + row));
       }
       table.push(line);
     }
@@ -323,28 +311,43 @@ ExcelPlus.prototype = {
    * @description This function permits to read a cell or a range
    *
    * @param {String} range can be a range (e.g. "A1:D1"), or a single cell (e.g. "A1")
+   * @param {Object} options
+   *   @param {Boolean} [options.parseDate=false] If a Date is found then it will try to parse the date to return a JS Date object
    * @return {Array} if it's a range then it returns a 2D array (the first one is the rows, and the second one is the columns), if it's a cell then it returns the value of the cell
    */
-  read:function(range) {
+  read:function(range, options) {
     if (this._checkSheet()==false) return this
-
+    options = options || {};
+    options.parseDate = (options.parseDate === true ? true : false);
+    var val=null;
+    
     if (this._isRange(range)) {
       range = XLSX.utils.decode_range(range);
       var table=[], line=[], R, C;
       for (R = range.s.r; R <= range.e.r; ++R) {
         line = [];
         for (C = range.s.c; C <= range.e.c; ++C) {
-          val = this.oSheet[XLSX.utils.encode_cell({c:C, r:R})];
-          if (val) val = val.v;
-          else val = null;
-          line.push(val);
+          line.push(this.read(XLSX.utils.encode_cell({c:C, r:R}), options));
         }
         table.push(line);
       }
       return table;
     }
     else if (this._isCell(range)) {
-      return this.oSheet[range].v || "";
+      val = this.oSheet[range];
+      if (val) {
+        // if it's a Date val.t == "d"
+        // then we parse it
+        if (val.t === "d" && options.parseDate) {
+          val = XLSX.SSF.parse_date_code(val.v);
+          val = new Date(val.y,val.m,val.d,val.H,val.M,val.S);
+        }
+        else {
+          val = val.w || val.v;
+        }
+      } else val=null;
+
+      return val;
     }
     
     return null;
@@ -381,12 +384,6 @@ ExcelPlus.prototype = {
    *   @param {String} [sheet] You can give the name of the sheet where to write, or the current selected sheet will be use, or the first sheet will be used
    *   @param {String} [cell] You can specify the cell reference (e.g. "A1")
    *   @param {String|Boolean|Number|Date|Array} content If it's an arrya then we ignore the "cell" param (e.g. [ [ "Content Cell A1", "Content Cell B1" ] [ "Content Cell A2", "Content Cell B2" ] ], otherwise the "cell" needs to be provided
-   *
-   * @example
-   *   var my=new ExcelPlus();
-   *   my.createFile(["Sheet1","Sheet2"]);
-   *   my.write({ "sheet":"Sheet1", "content":[ ["A1","B1","C1"] ] });
-   *   my.write({ "sheet":"Sheet2", "cell":"A1", "content":"This is the cell A1" });
    *
    * // TODO the value can also be a formula, e.g. "=SUM(A1:B1)"
    */
@@ -436,14 +433,6 @@ ExcelPlus.prototype = {
    *
    * @param {String} cell The cell reference (e.g. "A1")
    * @param {String|Number|Date|Boolean} content This is the value for the cell (could be `null`)
-   *
-   * @example
-   *   var my=new ExcelPlus();
-   *   my.createFile(["Sheet1","Sheet2"]);
-   *   my.selectSheet("Sheet1");
-   *   my.writeCell("A1","This is the content of the first cell");
-   *
-   * // TODO the value can also be a formula, e.g. "=SUM(A1:B1)"
    */
   writeCell:function(cell, content) {
     if (!this.selectedSheet) {
