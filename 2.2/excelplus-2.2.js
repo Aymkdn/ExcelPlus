@@ -702,7 +702,10 @@ ExcelPlus.prototype = {
     }
     return {"column": this._getColumn(arr[1]), "row": arr[2]*1};
   },
-  // see the index color at http://www.mvps.org/dmcritchie/excel/colors.htm
+  /**
+   * @ignore
+   * see the index color at http://www.mvps.org/dmcritchie/excel/colors.htm
+   */
   _getColorIndex:function(color) {
     if (!isNaN(color)) return color;
     switch (color) {
