@@ -125,9 +125,9 @@ ExcelPlus.prototype = {
     } else {
       Flash.getButtonLabel = function() { return params.labelButton };
       // we call Flash to be able to read the file
-      Flash.createButton(params.idButton, function(name,base64) {
-        _this.filename = name;
+      Flash.createButton(params.idButton, function(base64) {
         // then call our function
+        _this.filename = "Unknown Name";
         _this.oFile = XLSX.read(base64, {type: 'base64', cellDates:true, cellStyles:true});
         _this.nbSheets = _this.oFile.SheetNames.length;
         if (_this.nbSheets == 1) {
@@ -808,7 +808,7 @@ var Flash = {
     * This function permits to create a button to get the file
     *
     * @param {String} id It's the ID of the HTML object
-    * @param {Function} callback The function that will be called when the file is read with two parameters "the file name" and the "base64" version of the file
+    * @param {Function} callback The function that will be called when the file is read with "base64" version of the file
     */
   createButton:function(id, callback) {
     if (typeof callback==="function") this.callback=callback;
@@ -824,8 +824,8 @@ var Flash = {
       return this._waitForObjectToBeLoaded(id,callback);
     } else {
       // find the widht based on the button label
-      var label = Flash.getButtonLabel();
-      var wdth = 8 * label.length; // 8px by letter
+//      var label = Flash.getButtonLabel();
+      var wdth = 120;//8 * label.length; // 8px by letter
       swfobject.embedSWF(__ExcelPlus_flashPath+"/FileToDataURI.swf", id, wdth+"px" /* width of the Flash zone */, "22px" /* height of the Flash zone */, "10", __ExcelPlus_flashPath+"/expressInstall.swf", {}, {}, {});
     }
   },
@@ -835,9 +835,8 @@ var Flash = {
     * @param {String} name It's the filename
     * @param {String} base64 It's the base64 version of the file
     */
-  getFileData: function(name, base64) {
-    if (base64===undefined) { base64=name; name="Unknown Name" }
-    __Flash_getFileData_callback(name,base64);
+  getFileData: function(base64) {
+    __Flash_getFileData_callback(base64);
   },
   /** 
     * This function is used to wait for the swfobject to be loaded by the old browser
