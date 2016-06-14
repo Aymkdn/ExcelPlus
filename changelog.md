@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+**Change Log v2.4 (June 14, 2016)**
+
+  - Add `writeRow()` and `writeNextRow()`
+  - Show `write()` into the documentation
+  
 **Change Log v2.3 (January 15, 2016)**
 
   - Fix `writeCell()` when the content was an empty string
