@@ -399,10 +399,10 @@ ExcelPlus.prototype = {
    * @function
    * @description Write values into the workbook
    *
-   * @param {Object} options
-   *   @param {String} [sheet] You can give the name of the sheet where to write, or the current selected sheet will be use, or the first sheet will be used
-   *   @param {String} [cell] You can specify the cell reference (e.g. "A1")
-   *   @param {String|Boolean|Number|Date|Array} content If it's an arrya then we ignore the "cell" param (e.g. [ [ "Content Cell A1", "Content Cell B1" ] [ "Content Cell A2", "Content Cell B2" ] ], otherwise the "cell" needs to be provided
+   * @param {Object} params
+   *   @param {String|Boolean|Number|Date|Array} params.content If it's an array then we ignore the "cell" param (e.g. [ [ "Content Cell A1", "Content Cell B1" ] [ "Content Cell A2", "Content Cell B2" ] ], otherwise the "cell" needs to be provided
+   *   @param {String} [params.sheet] You can give the name of the sheet where to write, or the current selected sheet will be use, or the first sheet will be used
+   *   @param {String} [params.cell] You can specify the cell reference (e.g. "A1")
    *
    */
   write:function(options) {
