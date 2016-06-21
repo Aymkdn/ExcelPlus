@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+**Change Log v2.4.1 (June 21, 2016)**
+
+  - Better handle of cells with a Date
+  
 **Change Log v2.4 (June 14, 2016)**
 
   - Add `writeRow()` and `writeNextRow()`
