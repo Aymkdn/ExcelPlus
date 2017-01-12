@@ -479,7 +479,7 @@ ExcelPlus.prototype = {
     // select the sheet requested here
     this.selectSheet(options.sheet);
     
-    if (!options.content) {
+    if (typeof options.content === "undefined") {
       this.error = "[write] Please provide the 'content'";
       this._showErrors();
       return this;
