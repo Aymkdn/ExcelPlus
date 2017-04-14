@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+<style>
+html, body { height:100% }
+body { cursor:wait; }
+</style>
+<!--[if lte IE 8 ]>
+<script type="text/javascript" src="shim.js"></script>
+<![endif]-->
+</head>
+<body>
+<script type="text/javascript" src="common.js"></script>
+<p><b>For old browsers (IE8 and others), make sure to be in standard mode with <code>&lt;meta http-equiv="X-UA-Compatible" content="IE=EDGE"></code> and with a DOCTYPE.</b></p>
+<p>Please select an Excel file from your computer:</p>
+<object id="file-object"></object>
+<div id="result"></div>
+<script id="demo">
+function onReady() {
+  // in this example we want to read a local (= on the user's computer) Excel file
+  // to do so we need to add `<object id="file-object"></object>` into our HTML where a button to upload the file will appear
+  // then we can call our JavaScript
+  var ep=new ExcelPlus();
+  // we call openLocal() and when the file is loaded then we want to display its content
+  // openLocal() will use the FileAPI if exists, otherwise it will use a Flash object
+  ep.openLocal({
+    "flashPath":"2.5/swfobject/",
+    "labelButton":"Open an Excel file"
+  },function() {
+    // show the content of the first sheet
+    var a = ep.selectSheet(1).readAll({parseDate:true});
+    var html = "<table>";
+    for (var i=0; i < a.length; i++) {
+      html += '<tr>';
+      for (var j=0; j < a[i].length; j++) {
+        html += '<td>'+a[i][j]+'</td>'
+      }
+      html += '</tr>';
+    }
+    html += '</table>'
+    document.querySelector("#result").insertAdjacentHTML('beforeend', html);
+  });
+  document.body.style.cursor="default";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+<style>
+html, body { height:100% }
+body { cursor:wait; }
+</style>
+<!--[if lte IE 8 ]>
+<script type="text/javascript" src="shim.js"></script>
+<![endif]-->
+</head>
+<body>
+<script type="text/javascript" src="common.js"></script>
+<p><b>For old browsers (IE8 and others), make sure to be in standard mode with <code>&lt;meta http-equiv="X-UA-Compatible" content="IE=EDGE"></code> and with a DOCTYPE.</b></p>
+<p>Reading the file <a href="demo.xlsx">demo.xlsx</a>:</p>
+<div id="result"></div>
+<script id="demo">
+function onReady() {
+  // in this other example we want to read a remote (= on a server) Excel file
+  // to do so we need to make sure the server accepts the remote requests (it's the case for the same domain)
+  var ep=new ExcelPlus();
+  // we call openRemote()
+  ep.openRemote("demo.xlsx", function(passed) {
+    if (!passed) alert("Error: impossible to load the remote file");
+    else {
+      // show the content of the first sheet
+      var a = ep.selectSheet(1).readAll();
+      var html = "<table>";
+      for (var i=0; i < a.length; i++) {
+        html += '<tr>';
+        for (var j=0; j < a[i].length; j++) {
+          html += '<td>'+a[i][j]+'</td>'
+        }
+        html += '</tr>';
+      }
+      html += '</table>'
+      document.querySelector("#result").insertAdjacentHTML('beforeend', html);
+    }
+  })
+  document.body.style.cursor="default";
+}
+</script>
+</body>
+</html>

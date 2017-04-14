@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+  <mx:Script>
+    <![CDATA[
+      /*!
+       * Created by Aymeric (@aymkdn), inspired by https://github.com/Country/FileToDataURI.as and http://www.flex-tutorial.fr
+       * Contact: http://kodono.info
+       * Documentation: https://github.com/Aymkdn/FileToDataURI
+       * Licence: CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+       */
+      import flash.net.FileReference;
+      import flash.net.FileFilter;
+      import flash.events.IOErrorEvent;
+      import flash.events.Event;
+      import flash.external.ExternalInterface;
+
+      //FileReference Class well will use to load data
+      private var fileRef:FileReference;
+      // The javascript function that will be called
+      private var javascriptReceiver:String = 'Flash.getFileData';
+      // Used by the encode64
+      private static const _encodeChars:Vector.<int> = InitEncoreChar();
+
+      //File types which we want the user to open
+      // other example [new FileFilter("Images", "*.jpg;*.png;*.gif")]
+      private static const FILE_TYPES:Array = [new FileFilter("All Files", "*.*")];
+
+       // permits to customize the button label
+      private var _buttonLabel:String = ExternalInterface.call("Flash.getButtonLabel");
+      private function returnButtonLabel():String {
+        return _buttonLabel || "Charger Fichier";
+      }
+      
+      //called when the user clicks the load file button
+      private function onLoadFileClick():void
+      {
+        //create the FileReference instance
+        fileRef = new FileReference();
+
+        //listen for when they select a file
+        fileRef.addEventListener(Event.SELECT, onFileSelect);
+
+        //listen for when then cancel out of the browse dialog
+        fileRef.addEventListener(Event.CANCEL,onCancel);
+
+        //open a native browse dialog that filters for the files
+        fileRef.browse(FILE_TYPES);
+      }
+
+      /************ Browse Event Handlers **************/
+      //called when the user selects a file from the browse dialog
+      private function onFileSelect(e:Event):void
+      {
+        //listen for when the file has loaded
+        fileRef.addEventListener(Event.COMPLETE, onLoadComplete);
+
+        //listen for any errors reading the file
+        fileRef.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+
+        //load the content of the file
+        fileRef.load();
+      }
+
+      //called when the user cancels out of the browser dialog
+      private function onCancel(e:Event):void
+      {
+        trace("File Browse Canceled");
+        fileRef = null;
+      }
+
+      /************ Select Event Handlers **************/
+      //called when the file has completed loading
+      private function onLoadComplete(e:Event):void
+      {
+        //get the data from the file as a ByteArray
+        var data:ByteArray = fileRef.data;
+
+        // call external Javascript function and pass the base64 encoded data and the filename
+        ExternalInterface.call(javascriptReceiver, encode(data), fileRef.name);
+
+        //clean up the FileReference instance
+        fileRef = null;
+      }
+
+      //called if an error occurs while loading the file contents
+      private function onLoadError(e:IOErrorEvent):void
+      {
+        trace("Error loading file : " + e.text);
+      }
+
+   /* 
+    * Copyright (C) 2012 Jean-Philippe Auclair 
+    * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php 
+    * Base64 library for ActionScript 3.0. 
+    * By: Jean-Philippe Auclair : http://jpauclair.net 
+    * Based on article: http://jpauclair.net/2010/01/09/base64-optimized-as3-lib/ 
+    * Benchmark: 
+    * This version: encode: 260ms decode: 255ms 
+    * Blog version: encode: 322ms decode: 694ms 
+    * as3Crypto encode: 6728ms decode: 4098ms 
+    * 
+    * Encode: com.sociodox.utils.Base64 is 25.8x faster than as3Crypto Base64 
+    * Decode: com.sociodox.utils.Base64 is 16x faster than as3Crypto Base64 
+    * 
+    * Optimize & Profile any Flash content with TheMiner ( http://www.sociodox.com/theminer ) 
+    */
+    public static function encode(data:ByteArray):String {
+      var out:ByteArray = new ByteArray();
+      //Presetting the length keep the memory smaller and optimize speed since there is no "grow" needed
+      out.length = (2 + data.length - ((data.length + 2) % 3)) * 4 / 3; //Preset length //1.6 to 1.5 ms
+      var i:int = 0;
+      var r:int = data.length % 3;
+      var len:int = data.length - r;
+      var c:uint; //read (3) character AND write (4) characters
+      var outPos:int = 0;
+      while (i < len) {
+        //Read 3 Characters (8bit * 3 = 24 bits)
+        c = data[int(i++)] << 16 | data[int(i++)] << 8 | data[int(i++)];
+        
+        out[int(outPos++)] = _encodeChars[int(c >>> 18)];
+        out[int(outPos++)] = _encodeChars[int(c >>> 12 & 0x3f)];
+        out[int(outPos++)] = _encodeChars[int(c >>> 6 & 0x3f)];
+        out[int(outPos++)] = _encodeChars[int(c & 0x3f)];
+      }
+      
+      if (r == 1) { // Need two "=" padding
+        //Read one char, write two chars, write padding
+        c = data[int(i)];
+        
+        out[int(outPos++)] = _encodeChars[int(c >>> 2)];
+        out[int(outPos++)] = _encodeChars[int((c & 0x03) << 4)];
+        out[int(outPos++)] = 61;
+        out[int(outPos++)] = 61;
+      } else if (r == 2) { //Need one "=" padding
+        c = data[int(i++)] << 8 | data[int(i)];
+        
+        out[int(outPos++)] = _encodeChars[int(c >>> 10)];
+        out[int(outPos++)] = _encodeChars[int(c >>> 4 & 0x3f)];
+        out[int(outPos++)] = _encodeChars[int((c & 0x0f) << 2)];
+        out[int(outPos++)] = 61;
+      }
+      
+      return out.readUTFBytes(out.length);
+    }
+    
+    public static function InitEncoreChar():Vector.<int> {
+      var encodeChars:Vector.<int> = new Vector.<int>(64, true);
+      
+      // We could push the number directly
+      // but I think it's nice to see the characters (with no overhead on encode/decode)
+      var chars:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+      for (var i:int = 0; i < 64; i++) {
+        encodeChars[i] = chars.charCodeAt(i);
+      }
+      
+      return encodeChars;
+    }
+
+  ]]>
+  </mx:Script>
+
+  <mx:Button label="{returnButtonLabel()}" click="onLoadFileClick()"/>
+
+</mx:Application>

@@ -1,14 +1,24 @@
 ﻿# Changelog
 
+**Change Log v2.5 (April 14, 2017)**
+
+  - Add compatibility with the last js-xlsx releases (see https://github.com/Aymkdn/ExcelPlus/issues/8)
+  - Add option `propertiesOnly` for `read`
+  - Add option `compression` for `saveAs`
+  - Add function `open()` (see https://github.com/Aymkdn/ExcelPlus/issues/13)
+  - Fix Angular compatibility issue (see https://github.com/Aymkdn/ExcelPlus/issues/14)
+  - Change `parseDate` option for `read` (see documentation)
+  - Change demo pages to always get the latest release of js-xlsx
+
 **Change Log v2.4.1 (June 21, 2016)**
 
   - Better handle of cells with a Date
-  
+
 **Change Log v2.4 (June 14, 2016)**
 
   - Add `writeRow()` and `writeNextRow()`
   - Show `write()` into the documentation
-  
+
 **Change Log v2.3 (January 15, 2016)**
 
   - Fix `writeCell()` when the content was an empty string
