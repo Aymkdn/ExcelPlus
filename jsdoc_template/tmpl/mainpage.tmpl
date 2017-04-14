@@ -1,0 +1,119 @@
+<?js
+// index.html
+var data = obj;
+var self = this;
+?>
+
+<div class="span10">
+  <!-- content -->
+  <h1>ExcelPlus <?js= this.EPversion ?></h1>
+  <a href="https://twitter.com/aymkdn" class="twitter-follow-button" data-show-count="false" data-lang="fr" data-dnt="true">Follow @aymkdn</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  <a href="https://sibbell.com/" class="sibbill" title="with sibbill.com"><img src="img/sibbell.png" width="12" height="12" /> Be notified on new release</a>
+  <h2>Description</h2>
+  <p>ExcelPlus (EP) is a <strong>JavaScript API/interface to deal with Excel</strong> using the <a href="https://github.com/SheetJS/js-xlsx" target="_blank">js-xlsx library from SheetJS</a>. The SheetJS library is powerful but difficult to use, so I've created ExcelPlus to interface with it.</p>
+  <p>I've developed this interface for my needs during my job at <a href="http://www.dell.com">Dell</a> and we thought it could be useful for the community too, so here it is !</p>
+  <div class="alert alert-info">Tested with IE8+, Firefox, Chrome.</div>
+  <h2>Quick Start</h2>
+  <h3>Requirements</h3>
+  <p>Because ExcelPlus is an interface for <a href="https://github.com/SheetJS/js-xlsx" target="_blank">js-xlsx</a> then you'll need it.</p>
+  <p>Just add two lines to call the necessary files:</p>
+  <pre class="prettyprint lang-js">&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/CHOOSE_A_VERSION/xlsx.core.min.js">&lt;/script>
+&lt;script type="text/javascript" src="excelplus-<?js= this.EPversion ?>.min.js">&lt;/script></pre>
+  <h3>Usage</h3>
+  <h4>Write</h4>
+  <p>Below are two examples about how to write/create an Excel file:</p>
+  <pre class="prettyprint lang-js" style="margin-bottom:3px">
+// --- EXAMPLE 1 ---
+// in this example we want to build an Excel file with one sheet and write some stuff
+var ep=new ExcelPlus();
+// We're going to do several tasks in one line of code:
+// 1) create an Excel with one sheet called "Book1"
+// 2) write some data from an array to the new-created sheet
+// 3) create a new sheet called "Book2"
+// 4) write "A1" in cell "A1" of the new-created sheet
+// 5) write the today date in D1 of the "Book1" sheet
+// 6) save it on the user computer (this last step only works with IE10+ and modern browsers)
+ep.createFile("Book1")
+  .write({ "content":[ ["A1","B1","C1"] ] })
+  .createSheet("Book2")
+  .write({ "cell":"A1", "content":"A1" })
+  .write({ "sheet":"Book1", "cell":"D1", "content":new Date() })
+  .saveAs("demo.xlsx");
+</pre>
+  <p style="margin-left:25px">&rarr; <a href="demo/example1.html">See in action this example 1</a></p>
+  <pre class="prettyprint lang-js" style="margin-bottom:3px">
+// --- EXAMPLE 2 ---
+// in this other example we want to build an Excel file with several sheets and write some stuff
+var ep=new ExcelPlus();
+// We're going to do several tasks in one line of code:
+// 1) create an Excel with three sheets called "Book1", "Book2" and "Book3"
+// 2) write some data from an array to the "Book1"
+// 3) write "A1" in cell "A1" of "Book2"
+// 3) delete "Book3"
+// 4) select "Book2"
+// 5) write the today date in A2 of the "Book2" sheet
+ep.createFile([ "Book1", "Book2", "Book3" ])
+  .write({ "sheet":"Book1", "content":[ ["A1","B1","C1"] ] })
+  .write({ "sheet":"Book2", "cell":"A1", "content":"A1" })
+  .deleteSheet("Book3")
+  .selectSheet("Book2")
+  .write({ "cell":"A2", "content":new Date() });
+</pre>
+  <p style="margin-left:25px">&rarr; <a href="demo/example2.html">See in action this example 2</a></p>
+  <h4>Read</h4>
+  <p>Below are some examples about how to read an Excel file:</p>
+  <pre class="prettyprint lang-js" style="margin-bottom:3px">
+// --- EXAMPLE 3 ---
+// in this example we want to read a local (= on the user's computer) Excel file
+// to do so we need to add `&lt;object id="file-object">&lt;/object>` into our HTML where a button to upload the file will appear
+// then we can call our JavaScript
+var ep=new ExcelPlus();
+// we call openLocal() and when the file is loaded then we want to display its content
+// openLocal() will use the FileAPI if exists, otherwise it will use a Flash object
+ep.openLocal({
+  "flashPath":"/js/excelplus/2.4/swfobject/",
+  "labelButton":"Open an Excel file"
+},function() {
+  // show the content of the first sheet
+  console.table(ep.selectSheet(1).readAll())
+})
+</pre>
+  <p style="margin-left:25px">&rarr; <a href="demo/example3.html">See in action this example 3</a></p>
+  <pre class="prettyprint lang-js" style="margin-bottom:3px">
+// --- EXAMPLE 4 ---
+// in this other example we want to read a remote (= on a server) Excel file
+// to do so we need to make sure the server accepts the remote requests (it's the case for the same domain)
+var ep=new ExcelPlus();
+// we call openRemote()
+ep.openRemote("http://my.server.com/path/file.xlsx", function(passed) {
+  if (!passed) alert("Error: impossible to load the remote file");
+  else alert(ep.selectSheet(1).readAll()) // show the content of the first sheet
+})
+</pre>
+  <p style="margin-left:25px">&rarr; <a href="demo/example4.html">See in action this example 4</a></p>
+  <pre class="prettyprint lang-js">
+// a combo because we create an Excel file and we read it
+var ep=new ExcelPlus();
+ep.createFile().write({cell:"A1", content:"A1"}).writeCell("B1","B1").write({cell:"A2",content:"A2"});
+console.table(ep.read("A1:B3"));
+</pre>
+  <h4>Bonus</h4>
+  <p>If you use <strong>Sharepoint</strong> you can use ExcelPlus with my other library called <a href="http://aymkdn.github.io/SharepointPlus/">SharepointPlus</a>. With these both libraries you can save your Excel file to Sharepoint:</p>
+  <pre class="prettyprint lang-js">
+// Create an Excel file and save it to Sharepoint
+var ep=new ExcelPlus();
+ep.createFile("Book1").write({ "content":[ ["A1","B1","C1"] ] });
+$SP().list("Documents Library", "http://my.sharepoint.com/path/").createFile({
+  "content": ep.saveTo(),
+  "encoded": true,
+  "filename": "myfile.xlsx",
+  after:function(fileURL) {
+    // and you can send it to the user calling the below line :
+    window.location.href=fileURL;
+  }
+});
+</pre>
+</div>
+</div>
+
