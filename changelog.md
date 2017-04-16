@@ -9,6 +9,7 @@
   - Fix Angular compatibility issue (see https://github.com/Aymkdn/ExcelPlus/issues/14)
   - Change `parseDate` option for `read` (see documentation)
   - Change demo pages to always get the latest release of js-xlsx
+  - Change license to Apache v2
 
 **Change Log v2.4.1 (June 21, 2016)**
 

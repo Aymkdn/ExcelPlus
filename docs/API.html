@@ -50,7 +50,7 @@
         <li><a href="API.html#createFile">createFile</a></li><li><a href="API.html#createSheet">createSheet</a></li><li><a href="API.html#deleteSheet">deleteSheet</a></li><li><a href="API.html#getSheetNames">getSheetNames</a></li><li><a href="API.html#open">open</a></li><li><a href="API.html#openLocal">openLocal</a></li><li><a href="API.html#openRemote">openRemote</a></li><li><a href="API.html#read">read</a></li><li><a href="API.html#readAll">readAll</a></li><li><a href="API.html#reset">reset</a></li><li><a href="API.html#saveAs">saveAs</a></li><li><a href="API.html#saveTo">saveTo</a></li><li><a href="API.html#selectSheet">selectSheet</a></li><li><a href="API.html#write">write</a></li><li><a href="API.html#writeCell">writeCell</a></li><li><a href="API.html#writeNextRow">writeNextRow</a></li><li><a href="API.html#writeRow">writeRow</a></li>
       </ul>
     </div>
-    
+
 
 
 
@@ -63,24 +63,24 @@
           </div>
           <blockquote class="description">Permits to create an empty Excel file</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">String|Array</div>  <div class="name span4"><b data-param="sheetnames">sheetnames</b> <i>Optional, Default: "Sheet1"</i></div>  <div class="param_description span7">You can provide the names of the sheets in an array</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <h3>Example:</h3>
-          
-          <pre class="prettyprint lang-js">var myExcel = new ExcelPlus();myExcel.createFile(["Sheet 1", "Sheet 2"]);</pre>
-          
+
+          <pre class="prettyprint lang-js">var myExcel = new ExcelPlus();
+myExcel.createFile(["Sheet 1", "Sheet 2"]);</pre>
+
           <hr>
         </div>
-      
 
 
 
@@ -88,7 +88,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#createSheet" name="createSheet" title="Direct link to the method 'createSheet'">createSheet</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L595">source code</a>)
       <div>
@@ -96,20 +97,19 @@
           </div>
           <blockquote class="description">This function permits to create a new empty sheet</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="sheet">sheet</b> </div>  <div class="param_description span7">The name of the sheet to create</div></div><div class="parameter row-fluid">  <div class="type span1">Boolean</div>  <div class="name span4"><b data-param="select">select</b> <i>Optional, Default: true</i></div>  <div class="param_description span7">If you want to automatically select this sheet</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <hr>
         </div>
-      
 
 
 
@@ -117,7 +117,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#deleteSheet" name="deleteSheet" title="Direct link to the method 'deleteSheet'">deleteSheet</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L577">source code</a>)
       <div>
@@ -125,20 +126,19 @@
           </div>
           <blockquote class="description">This function permits to delete a sheet</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="sheet">sheet</b> </div>  <div class="param_description span7">The name of the sheet to delete (by default the selected one)</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <hr>
         </div>
-      
 
 
 
@@ -146,7 +146,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#getSheetNames" name="getSheetNames" title="Direct link to the method 'getSheetNames'">getSheetNames</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L244">source code</a>)
       <div>
@@ -154,22 +155,21 @@
           </div>
           <blockquote class="description">This function returns an array of the sheet names (the key is the sheet #)</blockquote>
 
-          
 
-          
+
+
           <div class="returns">
             <h3>Returns:</h3>
             <div class="row-fluid">
-            
+
               <div class="span2">Array</div><div class="span10">The different sheets related to the Excel file</div>
             </div>
           </div>
-          
 
-          
+
+
           <hr>
         </div>
-      
 
 
 
@@ -177,7 +177,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#open" name="open" title="Direct link to the method 'open'">open</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L68">source code</a>)
       <div>
@@ -185,24 +186,28 @@
           </div>
           <blockquote class="description">This function will read the data provided, to give more flexibility than openLocal() and openRemote()</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">Any</div>  <div class="name span4"><b data-param="fileData">fileData</b> </div>  <div class="param_description span7">The data that you want to parse</div></div><div class="parameter row-fluid">  <div class="type span1">Object</div>  <div class="name span4"><b data-param="options">options</b> </div>  <div class="param_description span7">(same options than <a href="https://github.com/SheetJS/js-xlsx#parsing-options">https://github.com/SheetJS/js-xlsx#parsing-options</a>)</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <h3>Example:</h3>
-          
-          <pre class="prettyprint lang-js">var ep=ExcelPlus();var header = dataURI.substr(0, dataURI.indexOf(","));var data = dataURI.substr(dataURI.indexOf(","));var type = header.match(/;base64/) ? "base64" : "binary";ep.open(data, {type:type});ep.read("A1"); // -> show the content of cell A1</pre>
-          
+
+          <pre class="prettyprint lang-js">var ep=ExcelPlus();
+var header = dataURI.substr(0, dataURI.indexOf(","));
+var data = dataURI.substr(dataURI.indexOf(","));
+var type = header.match(/;base64/) ? "base64" : "binary";
+ep.open(data, {type:type});
+ep.read("A1"); // -> show the content of cell A1</pre>
+
           <hr>
         </div>
-      
 
 
 
@@ -210,7 +215,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#openLocal" name="openLocal" title="Direct link to the method 'openLocal'">openLocal</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L94">source code</a>)
       <div>
@@ -218,20 +224,19 @@
           </div>
           <blockquote class="description">The HTML code for the input[file] will be &lt;object id="file-object">&lt;/object></blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">Object</div>  <div class="name span4"><b data-param="params">params</b> </div>  <div class="param_description span7"></div></div><div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="params.idButton">params.idButton</b> <i>Optional, Default: "file-object"</i></div>  <div class="param_description span7">This is the ID of the &lt;object> tag in your code</div></div><div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="params.flashPath">params.flashPath</b> <i>Optional, Default: "./"</i></div>  <div class="param_description span7">You must provide the absolute or relative path to the Flash files (swfobject.js, FileToDataURI.swf and expressInstall.swf)</div></div><div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="params.labelButton">params.labelButton</b> <i>Optional, Default: "Load a file"</i></div>  <div class="param_description span7">This is the label for the button</div></div><div class="parameter row-fluid">  <div class="type span1">Function</div>  <div class="name span4"><b data-param="params.onReady">params.onReady</b> </div>  <div class="param_description span7">The function that will be called when the file has been loaded</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <hr>
         </div>
-      
 
 
 
@@ -239,7 +244,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#openRemote" name="openRemote" title="Direct link to the method 'openRemote'">openRemote</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L175">source code</a>)
       <div>
@@ -247,20 +253,19 @@
           </div>
           <blockquote class="description">This function read a remote Excel file</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="url">url</b> </div>  <div class="param_description span7">The url of the Excel file (make sure it follows the cross domain security)</div></div><div class="parameter row-fluid">  <div class="type span1">Function</div>  <div class="name span4"><b data-param="onReady">onReady</b> </div>  <div class="param_description span7">This function is called when the Excel file has been read, and 'passed' will return true (success) or false (failed)</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <hr>
         </div>
-      
 
 
 
@@ -268,7 +273,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#read" name="read" title="Direct link to the method 'read'">read</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L346">source code</a>)
       <div>
@@ -276,28 +282,27 @@
           </div>
           <blockquote class="description">This function permits to read a cell or a range</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="range">range</b> </div>  <div class="param_description span7">can be a range (e.g. "A1:D1"), or a single cell (e.g. "A1")</div></div><div class="parameter row-fluid">  <div class="type span1">Object</div>  <div class="name span4"><b data-param="options">options</b> </div>  <div class="param_description span7"></div></div><div class="parameter row-fluid">  <div class="type span1">Boolean</div>  <div class="name span4"><b data-param="options.parseDate">options.parseDate</b> <i>Optional, Default: false</i></div>  <div class="param_description span7">When TRUE, the Date cells will be returned as a JS Date object; if FALSE it will be returned as a text and as it's shown into the Excel file</div></div><div class="parameter row-fluid">  <div class="type span1">Boolean</div>  <div class="name span4"><b data-param="options.propertiesOnly">options.propertiesOnly</b> <i>Optional, Default: false</i></div>  <div class="param_description span7">When it's true it will return an object with all properties has defined by sheetjs/XLSX-JS instead of return the cell value</div></div>
           </div>
-          
 
-          
+
+
           <div class="returns">
             <h3>Returns:</h3>
             <div class="row-fluid">
-            
+
               <div class="span2">Date|String|Array|Object</div><div class="span10">if it's a range then it returns a 2D array (the first one is the rows, and the second one is the columns), if it's a cell then it returns the value of the cell, or the object if options.propertiesOnly is true</div>
             </div>
           </div>
-          
 
-          
+
+
           <hr>
         </div>
-      
 
 
 
@@ -305,7 +310,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#readAll" name="readAll" title="Direct link to the method 'readAll'">readAll</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L319">source code</a>)
       <div>
@@ -313,28 +319,27 @@
           </div>
           <blockquote class="description">This function will read the all of the used range (we assume that the content starts at A1)</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">Object</div>  <div class="name span4"><b data-param="options">options</b> </div>  <div class="param_description span7"></div></div><div class="parameter row-fluid">  <div class="type span1">Boolean</div>  <div class="name span4"><b data-param="options.parseDate">options.parseDate</b> <i>Optional, Default: false</i></div>  <div class="param_description span7">If a Date is found then it will try to parse the date to return a JS Date object</div></div><div class="parameter row-fluid">  <div class="type span1">Boolean</div>  <div class="name span4"><b data-param="options.properties">options.properties</b> <i>Optional, Default: false</i></div>  <div class="param_description span7">When it's true it will return an object with all properties has defined by sheetjs/XLSX-JS instead of return the cell value</div></div>
           </div>
-          
 
-          
+
+
           <div class="returns">
             <h3>Returns:</h3>
             <div class="row-fluid">
-            
+
               <div class="span2">Array</div><div class="span10">it returns a 2D array; the first one is the rows, and the second one is the columns</div>
             </div>
           </div>
-          
 
-          
+
+
           <hr>
         </div>
-      
 
 
 
@@ -342,7 +347,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#reset" name="reset" title="Direct link to the method 'reset'">reset</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L42">source code</a>)
       <div>
@@ -350,14 +356,13 @@
           </div>
           <blockquote class="description">This function permits to reset the current ExcelPlus object</blockquote>
 
-          
 
-          
 
-          
+
+
+
           <hr>
         </div>
-      
 
 
 
@@ -365,7 +370,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#saveAs" name="saveAs" title="Direct link to the method 'saveAs'">saveAs</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L624">source code</a>)
       <div>
@@ -373,20 +379,19 @@
           </div>
           <blockquote class="description">This function permits de save the current book to a real Excel file (only for Modern Browsers and IE10+)</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="filename">filename</b> </div>  <div class="param_description span7">The name of the file, .e.g "book1.xlsx"</div></div><div class="parameter row-fluid">  <div class="type span1">Object</div>  <div class="name span4"><b data-param="options">options</b> <i>Optional</i></div>  <div class="param_description span7"></div></div><div class="parameter row-fluid">  <div class="type span1">Boolean</div>  <div class="name span4"><b data-param="options.compression">options.compression</b> <i>Optional, Default: true</i></div>  <div class="param_description span7">Permits to compress the file</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <hr>
         </div>
-      
 
 
 
@@ -394,7 +399,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#saveTo" name="saveTo" title="Direct link to the method 'saveTo'">saveTo</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L661">source code</a>)
       <div>
@@ -402,28 +408,27 @@
           </div>
           <blockquote class="description">It actually uses the `XLSX.write()` function</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="ext">ext</b> <i>Optional, Default: "xlsx"</i></div>  <div class="param_description span7">It's the extension type ('xlsx', 'xlsm' or 'xlsb')</div></div><div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="type">type</b> <i>Optional, Default: "base64"</i></div>  <div class="param_description span7">It can be "base64" or "binary"</div></div>
           </div>
-          
 
-          
+
+
           <div class="returns">
             <h3>Returns:</h3>
             <div class="row-fluid">
-            
+
               <div class="span2">String|Binary</div><div class="span10">The encoded content of the Excel file</div>
             </div>
           </div>
-          
 
-          
+
+
           <hr>
         </div>
-      
 
 
 
@@ -431,7 +436,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#selectSheet" name="selectSheet" title="Direct link to the method 'selectSheet'">selectSheet</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L260">source code</a>)
       <div>
@@ -439,20 +445,19 @@
           </div>
           <blockquote class="description">This function selects the specific sheet</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">String|Number</div>  <div class="name span4"><b data-param="sheet">sheet</b> </div>  <div class="param_description span7">If it's a number (starting from 1) that reprents the sheet position in the Excel file, otherwise it must be the name of the sheet (case sensitive)</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <hr>
         </div>
-      
 
 
 
@@ -460,7 +465,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#write" name="write" title="Direct link to the method 'write'">write</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L418">source code</a>)
       <div>
@@ -468,20 +474,19 @@
           </div>
           <blockquote class="description">Write values into the workbook</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">Object</div>  <div class="name span4"><b data-param="options">options</b> </div>  <div class="param_description span7"></div></div><div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="sheet">sheet</b> <i>Optional</i></div>  <div class="param_description span7">You can give the name of the sheet where to write, or the current selected sheet will be use, or the first sheet will be used</div></div><div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="cell">cell</b> <i>Optional</i></div>  <div class="param_description span7">You can specify the cell reference (e.g. "A1")</div></div><div class="parameter row-fluid">  <div class="type span1">String|Boolean|Number|Date|Array</div>  <div class="name span4"><b data-param="content">content</b> </div>  <div class="param_description span7">If it's an arrya then we ignore the "cell" param (e.g. [ [ "Content Cell A1", "Content Cell B1" ] [ "Content Cell A2", "Content Cell B2" ] ], otherwise the "cell" needs to be provided</div></div><div class="parameter row-fluid">  <div class="type span1">Object</div>  <div class="name span4"><b data-param="style">style</b> <i>Optional</i></div>  <div class="param_description span7">To add a style to a cell</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <hr>
         </div>
-      
 
 
 
@@ -489,7 +494,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#writeCell" name="writeCell" title="Direct link to the method 'writeCell'">writeCell</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L469">source code</a>)
       <div>
@@ -497,20 +503,19 @@
           </div>
           <blockquote class="description">Write a value into a cell for the current selected sheet</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="cell">cell</b> </div>  <div class="param_description span7">The cell reference (e.g. "A1")</div></div><div class="parameter row-fluid">  <div class="type span1">String|Number|Date|Boolean</div>  <div class="name span4"><b data-param="content">content</b> </div>  <div class="param_description span7">This is the value for the cell (could be `null`)</div></div><div class="parameter row-fluid">  <div class="type span1">Object</div>  <div class="name span4"><b data-param="style">style</b> </div>  <div class="param_description span7"></div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <hr>
         </div>
-      
 
 
 
@@ -518,7 +523,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#writeNextRow" name="writeNextRow" title="Direct link to the method 'writeNextRow'">writeNextRow</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L558">source code</a>)
       <div>
@@ -526,24 +532,23 @@
           </div>
           <blockquote class="description">Write on the next available row for the current selected sheet</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">Array</div>  <div class="name span4"><b data-param="content">content</b> </div>  <div class="param_description span7">This is the values for each cell of the row (could be `null`)</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <h3>Example:</h3>
-          
+
           <pre class="prettyprint lang-js">ep.writeRow(["Paris 1", "75001", "France"]);</pre>
-          
+
           <hr>
         </div>
-      
 
 
 
@@ -551,7 +556,8 @@
 
 
 
-    
+
+
     <div class="member">
       <h2><a href="#writeRow" name="writeRow" title="Direct link to the method 'writeRow'">writeRow</a></h2> (<a href="https://github.com/Aymkdn/SharepointPlus/blob/master/2.5/excelplus-2.5.js#L513">source code</a>)
       <div>
@@ -559,24 +565,25 @@
           </div>
           <blockquote class="description">Write a full row for the current selected sheet</blockquote>
 
-          
+
           <div class="parameters">
             <h3>Parameters:</h3>
-            
+
             <div class="parameter row-fluid">  <div class="type span1">String</div>  <div class="name span4"><b data-param="row">row</b> </div>  <div class="param_description span7">The row reference (e.g. "1" for the first row in the sheet)</div></div><div class="parameter row-fluid">  <div class="type span1">Array</div>  <div class="name span4"><b data-param="content">content</b> </div>  <div class="param_description span7">This is the values for each cell of the row (could be `null`)</div></div>
           </div>
-          
 
-          
 
-          
+
+
+
           <h3>Example:</h3>
-          
-          <pre class="prettyprint lang-js">ep.writeRow(1, ["City", "Postal Code", "Country"]);ep.writeRow(2, ["Montpellier", "34000", "France"]);</pre>
-          
+
+          <pre class="prettyprint lang-js">ep.writeRow(1, ["City", "Postal Code", "Country"]);
+ep.writeRow(2, ["Montpellier", "34000", "France"]);</pre>
+
           <hr>
         </div>
-      
+
 
 
 
@@ -587,7 +594,7 @@
 <footer class="footer">
   <div class="pull-right"><a href="#">Back to top</a></div>
   <div>Documentation built by <a target="_blank" href="http://twitter.com/aymkdn">@aymkdn</a> (<a href="http://kodono.info">http://kodono.info</a>) with <a href="http://usejsdoc.org/">JSDoc 3</a>.</div>
-  <div>This work is licensed under <a rel="license" href="https://github.com/Aymkdn/SharepointPlus/blob/master/license.md">GPL-3</a>.</div>
+  <div>This work is licensed under <a rel="license" href="https://github.com/Aymkdn/ExcelPlus/blob/master/LICENSE">Apache v2.0</a>.</div>
   <div>Designed with <a href="http://twitter.github.com/bootstrap/">Bootstrap from Twitter</a>.</div>
   <div>Automatically generated with JSDoc 3 on Fri, 14 Apr 2017 12:13:28 GMT</div>
 </footer>

@@ -1,8 +1,8 @@
 /*!
  * ExcelPlus JavaScript Library v2.5
  *
- * Copyright 2016, aymeric@kodono.info
- * Licensed under GPL Version 3 licenses.
+ * Copyright 2017, aymeric@kodono.info
+ * Licensed under Apache 2.0.
  *
  * http://aymkdn.github.io/ExcelPlus/
  */
